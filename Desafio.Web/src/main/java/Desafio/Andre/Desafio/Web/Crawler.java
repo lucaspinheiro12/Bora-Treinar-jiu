@@ -24,7 +24,7 @@ public class Crawler {
 			for(Element link : doc.select("a[href")) {
 				String proximoLink = link.absUrl("href");
 				if(visita.contains(proximoLink) == false) {
-					if(visita.size()<= 3) {
+					if(visita.size() <= 3) {
 						crawl( proximoLink, visita);
 					}
 				}
@@ -65,12 +65,11 @@ public class Crawler {
 				return doc;	
 			}
 			return null;
-		}
-		catch(IOException e){
+		}catch(IOException e){
+			System.out.println("O ERRO É : " + e.getMessage());;
 			return null;
-			
 		}
-		
+
 	}
 	
 	
