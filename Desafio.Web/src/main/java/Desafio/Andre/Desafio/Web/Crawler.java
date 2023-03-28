@@ -75,7 +75,5 @@ public class Crawler {
 							}
 					}
 				}
-		//sequencia de fibonate 
-	//codigo recursivo
 		}
 }
