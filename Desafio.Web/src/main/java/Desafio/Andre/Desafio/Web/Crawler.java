@@ -2,6 +2,7 @@ package Desafio.Andre.Desafio.Web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,56 +10,72 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawler {
-
+	
 
 	public static void main(String[] args) throws IOException {
-		String url = "https://g1.globo.com/";
-		String url2 = "https://g1.globo.com/economia/";
-		String url3 = "https://g1.globo.com/economia/agronegocios/";
-		crawl(url2, new ArrayList<String>());
-		crawl(url, new ArrayList<String>());
-		crawl(url3, new ArrayList<String>());
-		System.out.println("Encerrado.");
+		/*Crawler g1 = new Crawler("https://g1.globo.com/", "feed-post-link", "noticia", "post",
+				"content-head__subtitle", "content-publication-data__from", "content-publication-data__updated", new ArrayList<>());*/
+		/*Crawler terra = new Crawler("https://www.terra.com.br/", "card-news__url", "noticias", "byte", "article__header__subtitle",
+						"article__header__author__item__name", "date", new ArrayList<>());*/
+	}
+	
+	public Crawler(String linkUrl, String claseHref, String valorLink1, String valorLink2,
+			String classeSubTitulo,String classeAutor, String classeData, ArrayList<String>visitas) throws IOException {
+		super();
+		crawl(linkUrl, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
 	}
 
-	private static Document crawl( String url, ArrayList<String> visita) throws IOException{
-
+	private static Document pegaInformacao( String url, String claseHref, String valorLink1, String valorLink2,
+			String classeSubTitulo, String classeAutor, String classeData, ArrayList<String>link) throws IOException {
+		
 		try {
 			Connection con = Jsoup.connect(url);
-			Document doc = con.get();
-			
-			Elements div = doc.getElementById("bstn-fd-launcher").select(".feed-root").select(".feed-placeholder").select("._evt").select(".bstn-fd").select("._evg")
-					.select("._evt").select(".bastian-page").select("._evg").select("._evt")
-					.select(".bastian-feed-item").select(".bstn-item-shape").select(".feed-post-body");
-			
-			if(con.response().statusCode() == 200) {			
-				for(Element elemento : div) {
-					String urlDentro = elemento.select(".feed-post-body-title").select("._evt > h2 > a").first().attr("href");
-					String tituloDentro = elemento.select(".feed-post-body-title").select("._evt > h2 > a").text();
-					
-					Connection conDentro = Jsoup.connect(urlDentro);
-					Document docDentro = conDentro.get();
-					
-					String subtituloDentro = docDentro.getElementsByClass("content-head__subtitle").text();
-					String autor = 	docDentro.getElementsByClass("content-publication-data__text").select(".content-publication-data__from").text();
-					String data = docDentro.getElementsByClass("content-publication-data__text").select(".content-publication-data__updated > time").text();
-					
-					System.out.println("Link:  "+urlDentro);
-					System.out.println("Titulo:  "+ tituloDentro);
-					System.out.println("Subtitulo:  "+ subtituloDentro);
-				
-					
-					System.out.println("Autor da noticia: " + autor);
-					System.out.println("Data de publicação: " + data);
-					System.out.println();
+			Document doc = con.get();	
+			if(con.response().statusCode() == 200) {	
+				Elements div = doc.getElementsByClass(claseHref);
+					for(Element elemento : div) {	
+						String pegaUrl = elemento.select("a[href").first().attr("href");
+						if(pegaUrl.contains(valorLink1) || pegaUrl.contains(valorLink2)) {
+
+						String tituloPagina = elemento.select("a[href").text();
+	
+						Connection conTeste = Jsoup.connect(pegaUrl);
+						Document docTeste = conTeste.get();
+						
+						String subtituloDentro = docTeste.getElementsByClass(classeSubTitulo).text();
+						String autor = 	docTeste.getElementsByClass(classeAutor).text();
+						String data = docTeste.getElementsByClass(classeData).text();
+							
+						System.out.println("Link:  "+pegaUrl);
+						System.out.println("Titulo:  "+ tituloPagina);
+						System.out.println("Subtitulo:  "+ subtituloDentro);
+						System.out.println("Autor da noticia: " + autor);
+						System.out.println("Data de publicação: " + data);
+						System.out.println();
+					}
 				}
-				visita.add(url);
-				return doc;	
+					link.add(url);
+					return doc;
 			}
 			return null;
 		}catch(IOException e){
 			System.out.println("O ERRO É : " + e.getMessage());;
 			return null;
 		}
-	}	
+	}
+
+	private static void crawl( String url,String claseHref ,String valorLink1, String valorLink2,String classeSubTitulo,
+			String classeAutor,String classeData, ArrayList<String>visitas)throws IOException{
+				Document doc = pegaInformacao(url, claseHref, valorLink1, valorLink2,classeSubTitulo, classeAutor,classeData, visitas);
+				if (doc != null) {
+					for(Element link : doc.select("a[href")) {
+						String proximoLink = link.absUrl("href");
+							if(visitas.contains(proximoLink) == false) {
+								crawl(proximoLink, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
+							}
+					}
+				}
+		//sequencia de fibonate 
+	//codigo recursivo
+		}
 }
