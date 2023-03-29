@@ -2,6 +2,7 @@ package Desafio.Andre.Desafio.Web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -20,13 +21,13 @@ public class Crawler {
 	}
 	
 	public Crawler(String linkUrl, String claseHref, String valorLink1, String valorLink2,
-			String classeSubTitulo,String classeAutor, String classeData, ArrayList<String>visitas) throws IOException {
+			String classeSubTitulo,String classeAutor, String classeData, List<String>visitas) throws IOException {
 		super();
 		crawl(linkUrl, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
 	}
 
 	private static Document pegaInformacao( String url, String claseHref, String valorLink1, String valorLink2,
-			String classeSubTitulo, String classeAutor, String classeData, ArrayList<String>link) throws IOException {
+			String classeSubTitulo, String classeAutor, String classeData, List<String>link) throws IOException {
 		
 		try {
 			Connection con = Jsoup.connect(url);
@@ -65,7 +66,7 @@ public class Crawler {
 	}
 
 	private static void crawl( String url,String claseHref ,String valorLink1, String valorLink2,String classeSubTitulo,
-			String classeAutor,String classeData, ArrayList<String>visitas)throws IOException{
+			String classeAutor,String classeData, List<String>visitas)throws IOException{
 				Document doc = pegaInformacao(url, claseHref, valorLink1, valorLink2,classeSubTitulo, classeAutor,classeData, visitas);
 				if (doc != null) {
 					for(Element link : doc.select("a[href")) {
