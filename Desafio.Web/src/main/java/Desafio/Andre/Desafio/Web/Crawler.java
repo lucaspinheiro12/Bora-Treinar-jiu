@@ -14,16 +14,15 @@ public class Crawler {
 	
 
 	public static void main(String[] args) throws IOException {
-		/*Crawler g1 = new Crawler("https://g1.globo.com/", "feed-post-link", "noticia", "post",
-				"content-head__subtitle", "content-publication-data__from", "content-publication-data__updated", new ArrayList<>());*/
-		/*Crawler terra = new Crawler("https://www.terra.com.br/", "card-news__url", "noticias", "byte", "article__header__subtitle",
-						"article__header__author__item__name", "date", new ArrayList<>());*/
+		Crawler g1 = new Crawler();
+		Crawler terra = new Crawler();
+		  /*terra.buscadorInformacoes("https://www.terra.com.br/", "card-news__url", "noticias", "byte", "article__header__subtitle",
+	"article__header__author__item__name", "date", new ArrayList<>());*/
+		g1.buscadorLinks("https://g1.globo.com/", "feed-post-link", "noticia", "post", "content-head__subtitle",
+				"content-publication-data__from", "content-publication-data__updated", new ArrayList<>());
 	}
 	
-	public Crawler(String linkUrl, String claseHref, String valorLink1, String valorLink2,
-			String classeSubTitulo,String classeAutor, String classeData, List<String>visitas) throws IOException {
-		super();
-		crawl(linkUrl, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
+	public Crawler() {
 	}
 
 	private static Document pegaInformacao( String url, String claseHref, String valorLink1, String valorLink2,
@@ -60,19 +59,18 @@ public class Crawler {
 			}
 			return null;
 		}catch(IOException e){
-			System.out.println("O ERRO É : " + e.getMessage());;
-			return null;
+			throw new IOException(e);
 		}
 	}
 
-	private static void crawl( String url,String claseHref ,String valorLink1, String valorLink2,String classeSubTitulo,
+	private static void buscadorLinks( String url,String claseHref ,String valorLink1, String valorLink2,String classeSubTitulo,
 			String classeAutor,String classeData, List<String>visitas)throws IOException{
 				Document doc = pegaInformacao(url, claseHref, valorLink1, valorLink2,classeSubTitulo, classeAutor,classeData, visitas);
 				if (doc != null) {
 					for(Element link : doc.select("a[href")) {
 						String proximoLink = link.absUrl("href");
 							if(visitas.contains(proximoLink) == false) {
-								crawl(proximoLink, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
+								buscadorLinks(proximoLink, claseHref, valorLink1, valorLink2, classeSubTitulo, classeAutor,classeData, visitas);
 							}
 					}
 				}
