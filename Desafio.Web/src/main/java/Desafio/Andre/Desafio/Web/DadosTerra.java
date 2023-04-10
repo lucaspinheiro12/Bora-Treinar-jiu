@@ -34,32 +34,3 @@ public class DadosTerra extends ExtruturaMateria implements ManipulaDados   {
 		}
 	}
 }
-	
-	/*public Document buscaDados(String url, String claseHref, String classeAutor, String classeData, List<String> link) {
-		try {
-			Connection con = Jsoup.connect(url);
-			Document doc = con.get();	
-			if(con.response().statusCode() == 200) {	
-				Elements div = doc.getElementsByClass(claseHref);
-					for(Element elemento : div) {	
-						String pegaUrl = elemento.select("a[href").first().attr("href");		
-						String tituloPagina = elemento.select("a[href").text();
-
-						Connection conTeste = Jsoup.connect(pegaUrl);
-						Document docTeste = conTeste.get();
-						
-						String subtituloDentro = docTeste.getElementsByClass(classeSubTitulo).text();
-						String autor = 	docTeste.getElementsByClass(classeAutor).text();
-						String data = docTeste.getElementsByClass(classeData).text();
-						
-						Materia materia = new Materia(pegaUrl, tituloPagina, subtituloDentro, autor, data);
-						 //apresentaMateria(materia);
-					}
-				}
-					link.add(url);
-					return doc;
-		}catch(IOException e){
-			throw new IOException(e);
-		}
-		return null;
-	}*/

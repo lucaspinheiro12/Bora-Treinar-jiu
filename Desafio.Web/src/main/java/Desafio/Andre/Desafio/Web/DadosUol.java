@@ -9,20 +9,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class DadosG1 extends ExtruturaMateria implements ManipulaDados {
-	
+public class DadosUol extends ExtruturaMateria implements ManipulaDados{
+
 	@Override
 	public void buscaDados(String url, List<String> linkVisitas) {
 		try {
 			Connection con = Jsoup.connect(url);
 			Document doc = con.get();	
 			if(con.response().statusCode() == 200) {	
-				Elements div = doc.getElementsByClass(Links.G1.getHref());
+				Elements div = doc.getElementsByClass(Links.Uol.getHref());
 				for(Element elemento : div) {	
-					recebeMateria(elemento, Links.G1);
+					recebeMateria(elemento, Links.Uol);
 				}
-				Elements todosLinks = doc.getElementsByClass("menu-item-link").select("a[href");
-				for(Element todos : todosLinks) {
+				for(Element todos : div) {
 					String proximoLink = todos.attr("href");
 					if(pegaProximoLink(proximoLink, linkVisitas)) {
 						 linkVisitas.add(proximoLink);//fazer um for para add todos os links
@@ -32,7 +31,8 @@ public class DadosG1 extends ExtruturaMateria implements ManipulaDados {
 				}
 			}
 		}catch(IOException e){
-			 new Exception(e);
+			 new IOException(e);
 		}
 	}
+
 }

@@ -21,26 +21,6 @@ public class Materia {
 	public String getLink() {
 		return link;
 	}
-	
-	public void setLink(String link) {
-		this.link = link;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public void setSubtitulo(String subtitulo) {
-		this.subtitulo = subtitulo;
-	}
-
-	public void setAutorNoticia(String autorNoticia) {
-		autorNoticia = autorNoticia;
-	}
-
-	public void setDataPublicacao(String dataPublicacao) {
-		dataPublicacao = dataPublicacao;
-	}
 
 	public String getTitulo() {
 		return titulo;

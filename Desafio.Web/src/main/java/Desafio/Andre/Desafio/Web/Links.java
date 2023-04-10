@@ -6,9 +6,14 @@ public enum Links {
 	G1("https://g1.globo.com/", "feed-post-link","content-publication-data__from",
 			"content-publication-data__updated","content-head__subtitle", "noticia", "post",new DadosG1()),
 	
-	Terra("https://www.terra.com.br/", "card-news__text", "article__header__author__item__name",
-			"date", "article__header__subtitle", "", "", new DadosTerra());
+	Terra("https://www.terra.com.br/", "card-news__text--title", "article__header__author__item__name",
+			"date", "article__header__subtitle", ",", ",", new DadosTerra()),
 	
+	R7("https://www.r7.com/", "r7-flex-title-h5__link", "toolkit-signature__author","toolkit-signature__publication-time",
+			"toolkit-subtitle", "100", "090", new DadosR7()),
+	
+	Uol("https://www.uol.com.br/", "headlineSub__link","tooltip-container", "time",
+			"c-content-head__subtitle", "2023", "-", new DadosUol());
 	private String url;
 	private String href;
 	private String autor;

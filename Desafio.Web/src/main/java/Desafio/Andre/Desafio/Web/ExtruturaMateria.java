@@ -11,13 +11,11 @@ import org.jsoup.nodes.Element;
 
 public class ExtruturaMateria {
 	
-	private List<String>visitas;
 	
 	public  void recebeMateria(Element elemento, Links link) throws IOException {
 		
-			//String pegaUrl = elemento.select("a[href").first().attr("href");
-			String pegaUrl = elemento.select("a[href").attr("href");
-			if(pegaUrl.contains(link.getParametro1()) || pegaUrl.contains(link.getParametro2())) {
+		String pegaUrl = elemento.select("a[href").attr("href");
+		if(pegaUrl.contains(link.getParametro1()) || pegaUrl.contains(link.getParametro2())) {
 
 			String tituloPagina = elemento.select("a[href").text();
 
@@ -25,12 +23,11 @@ public class ExtruturaMateria {
 			Document docTeste = conTeste.get();
 
 			String subtituloDentro = docTeste.getElementsByClass(link.getSbubtitulo()).text();
-			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();
-			String data = docTeste.getElementsByClass(link.getData()).text();
+			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();			String data = docTeste.getElementsByClass(link.getData()).text();
 			
 			Materia materia = new Materia(pegaUrl, tituloPagina, subtituloDentro, autor, data);
 			apresentaDados(materia);
-			}
+		}
 	}
 	
 	public void apresentaDados(Materia materia) {
@@ -44,10 +41,8 @@ public class ExtruturaMateria {
 	
 	
 	public boolean pegaProximoLink( String url, List<String>visitas) {
-		if(visitas.contains(url) == false) {
-			visitas.add(url);
+		if(! visitas.contains(url)) {
 			return true;
-
 		}
 		return false;
 	}		
