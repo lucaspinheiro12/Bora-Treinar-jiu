@@ -16,7 +16,7 @@ public class ValorCliente {
 		
 	}
 	
-	public void pegSiteEscolhido(String site) {
+	public void pegaSiteEscolhido(String site) {
 		if(site.equals("g1")) {
 			Links G1 = Links.G1;
 			G1.getPegaDados().buscaDados(G1.getUrl(), new ArrayList<>());
