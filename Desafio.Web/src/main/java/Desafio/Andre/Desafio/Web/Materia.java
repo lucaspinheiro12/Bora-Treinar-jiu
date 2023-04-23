@@ -8,9 +8,7 @@ public class Materia {
 	private String autorNoticia;
 	private String dataPublicacao;
 	
-	public Materia() {
-		
-	}
+	
 
 	public Materia(String link, String titulo, String subtitulo, String autorNoticia, String dataPublicacao) {
 		this.link = link;

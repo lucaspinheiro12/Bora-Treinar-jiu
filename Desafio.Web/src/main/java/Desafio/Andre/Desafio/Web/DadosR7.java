@@ -9,8 +9,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class DadosR7 extends ExtruturaMateria implements ManipulaDados {
+public class DadosR7 implements ManipulaDados {
 
+	ExtruturaMateria extruturaMateria = new ExtruturaMateria();
 	@Override
 	public void buscaDados(String url, List<String> linkVisitas) {
 		try {
@@ -19,12 +20,12 @@ public class DadosR7 extends ExtruturaMateria implements ManipulaDados {
 			if(con.response().statusCode() == 200) {	
 				Elements div = doc.getElementsByClass(Links.R7.getHref());
 				for(Element elemento : div) {	
-					recebeMateria(elemento, Links.R7);
+					extruturaMateria.recebeMateria(elemento, Links.R7);
 				}
 				Elements todosLinks = doc.getElementsByClass("toolkit-side-menu__link").select("a[href");
 				for(Element todos : todosLinks) {
 					String proximoLink = todos.attr("href");
-					if(pegaProximoLink(proximoLink, linkVisitas)) {
+					if(extruturaMateria.pegaProximoLink(proximoLink, linkVisitas)) {
 						 linkVisitas.add(proximoLink);
 						 buscaDados(proximoLink, linkVisitas);
 

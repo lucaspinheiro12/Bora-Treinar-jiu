@@ -11,9 +11,7 @@ import org.jsoup.nodes.Element;
 
 public class ExtruturaMateria {
 	
-	
 	public  void recebeMateria(Element elemento, Links link) throws IOException {
-		
 		String pegaUrl = elemento.select("a[href").attr("href");
 		if(pegaUrl.contains(link.getParametro1()) || pegaUrl.contains(link.getParametro2())) {
 
@@ -23,7 +21,8 @@ public class ExtruturaMateria {
 			Document docTeste = conTeste.get();
 
 			String subtituloDentro = docTeste.getElementsByClass(link.getSbubtitulo()).text();
-			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();			String data = docTeste.getElementsByClass(link.getData()).text();
+			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();
+			String data = docTeste.getElementsByClass(link.getData()).text();
 			
 			Materia materia = new Materia(pegaUrl, tituloPagina, subtituloDentro, autor, data);
 			apresentaDados(materia);
