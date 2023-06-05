@@ -1,4 +1,4 @@
-package Desafio.Andre.Desafio.Web;
+package Desafio.Andre.Desafio.Web.Extrutura;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,13 +7,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import Desafio.Andre.Desafio.Web.DadosEnum.Links;
+import Desafio.Andre.Desafio.Web.Materia.Materia;
+
 
 
 public class ExtruturaMateria {
 	
-	
 	public  void recebeMateria(Element elemento, Links link) throws IOException {
-		
 		String pegaUrl = elemento.select("a[href").attr("href");
 		if(pegaUrl.contains(link.getParametro1()) || pegaUrl.contains(link.getParametro2())) {
 
@@ -23,7 +24,8 @@ public class ExtruturaMateria {
 			Document docTeste = conTeste.get();
 
 			String subtituloDentro = docTeste.getElementsByClass(link.getSbubtitulo()).text();
-			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();			String data = docTeste.getElementsByClass(link.getData()).text();
+			String autor = 	docTeste.getElementsByClass(link.getAutor()).text();
+			String data = docTeste.getElementsByClass(link.getData()).text();
 			
 			Materia materia = new Materia(pegaUrl, tituloPagina, subtituloDentro, autor, data);
 			apresentaDados(materia);

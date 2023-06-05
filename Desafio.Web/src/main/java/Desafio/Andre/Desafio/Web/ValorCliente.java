@@ -16,41 +16,26 @@ public class ValorCliente {
 		
 	}
 	
-	public String pegaSiteEscolhido(String site) {
+	public void pegaSiteEscolhido(String site) {
 		if(site.equals("g1")) {
-			return "https://g1.globo.com/";
-				
-			}else if(site.equals("terra")) {
-				return "https://www.terra.com.br/";
-				
-			}else if(site.equals("r7")) {
-				return "https://www.terra.com.br/";
-				
-			}else if (site.equals("uol")) {
-				return "https://www.uol.com.br/";
-				
-			}else {
-				return "esse site não foi encontrado.";
-			}
-	}
-	
-	public ManipulaDados pegaClasseEscolhido(String site) {
-		if(site.equals("g1")) {
-			return new DadosG1();
+			Links G1 = Links.G1;
+			G1.getPegaDados().buscaDados(G1.getUrl(), new ArrayList<>());
 			
 		}else if(site.equals("terra")) {
-			return new DadosTerra();
+			Links terra = Links.Terra;
+			terra.getPegaDados().buscaDados(terra.getUrl(), new ArrayList<>());
 			
 		}else if(site.equals("r7")) {
-			return new DadosR7();
+			Links R7 = Links.R7;
+			R7.getPegaDados().buscaDados(R7.getUrl(), new ArrayList<>()); 
 			
 		}else if (site.equals("uol")) {
-			return new DadosUol();
+			Links Uol = Links.Uol;
+			Uol.getPegaDados().buscaDados(Uol.getUrl(), new ArrayList<>());
 			
 		}else {
 			System.out.println("esse site não foi encontrado.");
-			return null;
 		}
-	
+		
 	}
 }

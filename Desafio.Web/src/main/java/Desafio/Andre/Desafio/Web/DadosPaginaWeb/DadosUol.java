@@ -1,4 +1,4 @@
-package Desafio.Andre.Desafio.Web;
+package Desafio.Andre.Desafio.Web.DadosPaginaWeb;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,22 +9,27 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class DadosG1 extends ExtruturaMateria implements ManipulaDados {
-	
+import Desafio.Andre.Desafio.Web.DadosEnum.Links;
+import Desafio.Andre.Desafio.Web.Extrutura.ExtruturaMateria;
+import Desafio.Andre.Desafio.Web.InterfaceManiputacao.ManipulaDados;
+
+public class DadosUol implements ManipulaDados{
+
+	ExtruturaMateria extruturaMateria = new ExtruturaMateria();
 	@Override
 	public void buscaDados(String url, List<String> linkVisitas) {
+		//String url, List<String> linkVisitas
 		try {
 			Connection con = Jsoup.connect(url);
 			Document doc = con.get();	
 			if(con.response().statusCode() == 200) {	
-				Elements div = doc.getElementsByClass(Links.G1.getHref());
+				Elements div = doc.getElementsByClass(Links.Uol.getHref());
 				for(Element elemento : div) {	
-					recebeMateria(elemento, Links.G1);
+					extruturaMateria.recebeMateria(elemento, Links.Uol);
 				}
-				Elements todosLinks = doc.getElementsByClass("menu-item-link").select("a[href");
-				for(Element todos : todosLinks) {
+				for(Element todos : div) {
 					String proximoLink = todos.attr("href");
-					if(pegaProximoLink(proximoLink, linkVisitas)) {
+					if(extruturaMateria.pegaProximoLink(proximoLink, linkVisitas)) {
 						 linkVisitas.add(proximoLink);//fazer um for para add todos os links
 						 buscaDados(proximoLink, linkVisitas);
 
@@ -32,7 +37,8 @@ public class DadosG1 extends ExtruturaMateria implements ManipulaDados {
 				}
 			}
 		}catch(IOException e){
-			 new Exception(e);
+			 new IOException(e);
 		}
 	}
+
 }
